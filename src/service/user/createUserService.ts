@@ -1,5 +1,5 @@
 import { User } from '../../models/User.js';
-import bycrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import type { UserInput } from '../../modules/user/user.controller.js';
 
 export const createUserService = async ({ email, password }: UserInput) => {
@@ -7,7 +7,7 @@ export const createUserService = async ({ email, password }: UserInput) => {
   if (existsUser) {
     throw new Error('Email already exists');
   }
-  const passwordHash = await bycrypt.hash(password, 10);
+  const passwordHash = await bcrypt.hash(password, 10);
 
   await User.create({ email, password: passwordHash });
 
