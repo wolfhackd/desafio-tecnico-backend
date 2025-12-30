@@ -1,0 +1,35 @@
+import type { CreateOrderDTO } from "../../dtos/CreateOrder.dto.js";
+import { Order } from "../../models/Order.js";
+
+
+
+export const createOrderService = async ({lab, patient, customer, services}: CreateOrderDTO) =>{
+
+  if (!lab || !patient || !customer) {
+    throw new Error('lab, patient and customer are required');
+  }
+
+   if (!services || services.length === 0) {
+    throw new Error('Order must have at least one service');
+  }
+
+  for (const service of services) {
+    if (!service.name) {
+      throw new Error('Service name is required');
+    }
+
+    if (service.value === undefined || service.value === null) {
+      throw new Error('Service value is required');
+    }
+  }
+
+  const createdOrder = await Order.create({
+    lab,
+    patient,
+    customer,
+    services
+  })
+
+  return createdOrder;
+  
+}
