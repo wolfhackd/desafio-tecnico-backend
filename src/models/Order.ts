@@ -6,7 +6,7 @@ export interface IService {
   status: 'PENDING' | 'DONE';
 }
 
-export interface IOrder extends Document {
+export interface IOrder {
   lab: string;
   patient: string;
   customer: string;
