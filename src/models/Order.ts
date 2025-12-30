@@ -1,17 +1,34 @@
 import { Schema, model, Document } from 'mongoose';
 
+export enum OrderState {
+  CREATED = 'CREATED',
+  ANALYSIS = 'ANALYSIS',
+  COMPLETED = 'COMPLETED',
+}
+
+export enum OrderStatus {
+  ACTIVE = 'ACTIVE',
+  DELETED = 'DELETED',
+}
+
+export enum ServiceStatus {
+  PENDING = 'PENDING',
+  DONE = 'DONE',
+}
+
+
 export interface IService {
   name: string;
   value: number;
-  status: 'PENDING' | 'DONE';
+  status: ServiceStatus;
 }
 
 export interface IOrder {
   lab: string;
   patient: string;
   customer: string;
-  state: 'CREATED' | 'ANALYSIS' | 'COMPLETED';
-  status: 'ACTIVE' | 'DELETED';
+  state: OrderState;
+  status: OrderStatus;
   services: IService[];
 }
 
@@ -21,8 +38,8 @@ const ServiceSchema = new Schema<IService>(
     value: { type: Number, required: true },
     status: {
       type: String,
-      enum: ['PENDING', 'DONE'],
-      default: 'PENDING',
+      enum: Object.values(ServiceStatus),
+      default: ServiceStatus.PENDING,
     },
   },
   { _id: false },
@@ -35,13 +52,13 @@ const OrderSchema = new Schema<IOrder>(
     customer: { type: String, required: true },
     state: {
       type: String,
-      enum: ['CREATED', 'ANALYSIS', 'COMPLETED'],
-      default: 'CREATED',
+      enum: Object.values(OrderState),
+      default: OrderState.CREATED,
     },
     status: {
       type: String,
-      enum: ['ACTIVE', 'DELETED'],
-      default: 'ACTIVE',
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.ACTIVE,
     },
     services: {
       type: [ServiceSchema],
