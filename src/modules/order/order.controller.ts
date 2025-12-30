@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { createOrderService } from "../../service/order/createOrderService.js";
 import type { CreateOrderInput } from "../../dtos/order.dto.js";
+import { listOrdersService } from "../../service/order/listOrderService.js";
 
 export const createOrder = async (req: Request, res: Response)=>{
   try{
@@ -23,6 +24,17 @@ export const createOrder = async (req: Request, res: Response)=>{
     return res.status(201).json(newOrder);
 
 
+  }catch(e:any){
+    return res.status(500).json({
+      message: e.message || 'Internal server error',
+    });
+  }
+}
+
+export const listOrders = async (req: Request, res: Response)=>{
+  try{
+    const orders = await listOrdersService();
+    return res.status(200).json(orders);
   }catch(e:any){
     return res.status(500).json({
       message: e.message || 'Internal server error',
