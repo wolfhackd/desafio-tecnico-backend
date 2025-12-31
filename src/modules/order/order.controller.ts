@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { createOrderService } from "../../service/order/createOrderService.js";
 import type { CreateOrderInput } from "../../dtos/order.dto.js";
 import { listOrdersService } from "../../service/order/listOrderService.js";
+import type { ListOrdersDTO } from "../../dtos/FilterOrder.dto.js";
 
 export const createOrder = async (req: Request, res: Response)=>{
   try{
@@ -33,7 +34,23 @@ export const createOrder = async (req: Request, res: Response)=>{
 
 export const listOrders = async (req: Request, res: Response)=>{
   try{
-    const orders = await listOrdersService();
+  const limit = req.query.limit
+  ? Number(req.query.limit)
+  : 10;
+    const state = req.query.state as
+      | 'CREATED'
+      | 'ANALYSIS'
+      | 'COMPLETED'
+      | undefined;
+
+      const payload: ListOrdersDTO = {
+      limit,
+      ...(state && { state }),
+    };
+
+
+     const orders = await listOrdersService(payload);
+
     return res.status(200).json(orders);
   }catch(e:any){
     return res.status(500).json({
