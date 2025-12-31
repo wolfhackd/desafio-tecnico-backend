@@ -5,14 +5,6 @@ import { Order } from "../../models/Order.js";
 
 export const createOrderService = async ({lab, patient, customer, services}: CreateOrderDTO) =>{
 
-  if (!lab || !patient || !customer) {
-    throw new Error('lab, patient and customer are required');
-  }
-
-   if (!services || services.length === 0) {
-    throw new Error('Order must have at least one service');
-  }
-
   for (const service of services) {
     if (!service.name) {
       throw new Error('Service name is required');
@@ -20,6 +12,10 @@ export const createOrderService = async ({lab, patient, customer, services}: Cre
 
     if (service.value === undefined || service.value === null) {
       throw new Error('Service value is required');
+    }
+
+    if (service.value <= 0) {
+      throw new Error('Service value must be greater than 0');
     }
   }
 
