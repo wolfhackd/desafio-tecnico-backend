@@ -1,15 +1,14 @@
 import type { Request, Response } from 'express';
-import { createUserService } from '../../service/user/createUserService.js';
-import { loginUserService } from '../../service/user/loginUserService.js';
+import { createUserService } from '../../services/user/createUserService.js';
+import { loginUserService } from '../../services/user/loginUserService.js';
+import type { CreateUserDTO } from '../../dtos/User/CreateUser.dto.js';
+import type { LoginUserDTO } from '../../dtos/User/LoginUser.dto.js';
 
-export interface UserInput {
-  email: string;
-  password: string;
-}
+
 
 export async function createUser(req: Request, res: Response) {
   try {
-    const { email, password } = req.body as UserInput;
+    const { email, password } = req.body as CreateUserDTO;
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
@@ -23,7 +22,7 @@ export async function createUser(req: Request, res: Response) {
 
 export async function loginUser(req: Request, res: Response) {
   try {
-    const { email, password } = req.body as UserInput;
+    const { email, password } = req.body as LoginUserDTO;
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });

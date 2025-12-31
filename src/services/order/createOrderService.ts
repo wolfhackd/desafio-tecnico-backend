@@ -1,4 +1,5 @@
-import type { CreateOrderDTO } from "../../dtos/CreateOrder.dto.js";
+
+import type { CreateOrderDTO } from "../../dtos/Order/CreateOrder.dto.js";
 import { Order } from "../../models/Order.js";
 
 
