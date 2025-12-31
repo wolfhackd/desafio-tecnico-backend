@@ -4,23 +4,32 @@ import { Order } from "../../models/Order.js";
 
 
 
-export const listOrdersService = async ({limit, state}: ListOrdersDTO):Promise<ListOrdersResponseDTO> =>{
+export const listOrdersService = async (
+  { limit, state }: ListOrdersDTO
+): Promise<ListOrdersResponseDTO> => {
 
- const filters: any = {};
+  const filters: Record<string, any> = {};
 
- if (state) {
-    filters.state = state;
+  const allowedStates = ['CREATED', 'ANALYSIS', 'COMPLETED'] as const;
+
+  if (state) {
+    const normalizedState = state.toUpperCase();
+
+    if (!allowedStates.includes(normalizedState as any)) {
+      throw new Error('Invalid state filter(CREATED, ANALYSIS, COMPLETED)');
+    }
+
+    filters.state = normalizedState;
   }
-  
-  const ordersTotal = await Order.find().countDocuments();
-  const orders = await Order.find(filters).limit(limit || 10);
 
-  const result = {
+  const ordersTotal = await Order.countDocuments(filters);
+
+  const orders = await Order
+    .find(filters)
+    .limit(limit ?? 10);
+
+  return {
     total: ordersTotal,
-    orders
-  }
-
-  // return orders;
-  return result;
-  
-}
+    orders,
+  };
+};
