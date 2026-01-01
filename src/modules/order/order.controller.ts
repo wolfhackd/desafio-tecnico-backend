@@ -4,6 +4,7 @@ import { createOrderService } from "../../services/order/createOrderService.js";
 import { listOrdersService } from "../../services/order/listOrderService.js";
 import type { ListOrdersDTO } from "../../dtos/Order/FilterOrder.dto.js";
 import type { CreateOrderDTO } from "../../dtos/Order/CreateOrder.dto.js";
+import { advanceOrderStateService } from "../../services/order/advanceOrderStateService.js";
 
 
 
@@ -55,6 +56,24 @@ export const listOrders = async (req: Request, res: Response)=>{
      const orders = await listOrdersService(payload);
 
     return res.status(200).json(orders);
+  }catch(e:any){
+    return res.status(500).json({
+      message: e.message || 'Internal server error',
+    });
+  }
+}
+
+export const advanceOrderState = async (req: Request, res: Response)=>{
+  try{
+      const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: 'Order id is required' });
+  }
+
+  const order = await advanceOrderStateService(id);
+
+  return res.status(200).json(order);
   }catch(e:any){
     return res.status(500).json({
       message: e.message || 'Internal server error',
