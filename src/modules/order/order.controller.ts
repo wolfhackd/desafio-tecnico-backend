@@ -53,7 +53,7 @@ export const listOrders = async (req: Request, res: Response)=>{
     };
 
 
-     const orders = await listOrdersService(payload);
+    const orders = await listOrdersService(payload);
 
     return res.status(200).json(orders);
   }catch(e:any){
