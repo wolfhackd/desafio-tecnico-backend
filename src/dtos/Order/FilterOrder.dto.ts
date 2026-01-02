@@ -1,4 +1,4 @@
-export interface ListOrdersDTO {
+export interface FilterOrdersDTO {
   limit: number;
   state?: string;
    page: number;

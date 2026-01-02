@@ -1,9 +1,9 @@
-import type { ListOrdersDTO } from '../../dtos/Order/FilterOrder.dto.js';
+import type { FilterOrdersDTO } from '../../dtos/Order/FilterOrder.dto.js';
 import type { ListOrdersResponseDTO } from '../../dtos/Order/ListOrderResponse.dto.js';
 import { Order, OrderState } from '../../models/Order.js';
 
 export const listOrdersService = async (
-  { limit, page, state }: ListOrdersDTO
+  { limit, page, state }: FilterOrdersDTO
 ): Promise<ListOrdersResponseDTO> => {
 
   const filters: Record<string, any> = {};
