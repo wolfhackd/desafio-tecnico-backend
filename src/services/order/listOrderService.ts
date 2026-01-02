@@ -1,11 +1,9 @@
-import type { ListOrdersDTO } from "../../dtos/FilterOrder.dto.js";
-import type { ListOrdersResponseDTO } from "../../dtos/FilterOrderResponse.dto.js";
-import { Order } from "../../models/Order.js";
-
-
+import type { ListOrdersDTO } from '../../dtos/Order/FilterOrder.dto.js';
+import type { ListOrdersResponseDTO } from '../../dtos/Order/ListOrderResponse.dto.js';
+import { Order, OrderState } from '../../models/Order.js';
 
 export const listOrdersService = async (
-  { limit, state }: ListOrdersDTO
+  { limit, page, state }: ListOrdersDTO
 ): Promise<ListOrdersResponseDTO> => {
 
   const filters: Record<string, any> = {};
@@ -16,20 +14,24 @@ export const listOrdersService = async (
     const normalizedState = state.toUpperCase();
 
     if (!allowedStates.includes(normalizedState as any)) {
-      throw new Error('Invalid state filter(CREATED, ANALYSIS, COMPLETED)');
+      throw new Error('Invalid state filter (CREATED, ANALYSIS, COMPLETED)');
     }
 
     filters.state = normalizedState;
   }
 
-  const ordersTotal = await Order.countDocuments(filters);
+  const total = await Order.countDocuments(filters);
 
-  const orders = await Order
-    .find(filters)
-    .limit(limit ?? 10);
+  const orders = await Order.find(filters)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .sort({ createdAt: -1 });
 
   return {
-    total: ordersTotal,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
     orders,
   };
 };

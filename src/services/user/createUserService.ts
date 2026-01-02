@@ -1,8 +1,8 @@
+import type { CreateUserDTO } from '../../dtos/User/CreateUser.dto.js';
 import { User } from '../../models/User.js';
 import bcrypt from 'bcrypt';
-import type { UserInput } from '../../modules/user/user.controller.js';
 
-export const createUserService = async ({ email, password }: UserInput) => {
+export const createUserService = async ({ email, password }: CreateUserDTO) => {
   const existsUser = await User.findOne({ email });
   if (existsUser) {
     throw new Error('Email already exists');

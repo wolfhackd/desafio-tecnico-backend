@@ -1,9 +1,10 @@
 import { User } from '../../models/User.js';
 import bcrypt from 'bcrypt';
-import type { UserInput } from '../../modules/user/user.controller.js';
-import jwt from 'jsonwebtoken';
 
-export const loginUserService = async ({ email, password }: UserInput) => {
+import jwt from 'jsonwebtoken';
+import type { LoginUserDTO } from '../../dtos/User/LoginUser.dto.js';
+
+export const loginUserService = async ({ email, password }: LoginUserDTO) => {
 
   const user = await User.findOne({ email });
 

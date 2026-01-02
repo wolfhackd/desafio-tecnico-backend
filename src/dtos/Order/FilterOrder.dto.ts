@@ -1,4 +1,5 @@
 export interface ListOrdersDTO {
   limit: number;
-  state?: 'CREATED' | 'ANALYSIS' | 'COMPLETED';
+  state?: string;
+   page: number;
 }

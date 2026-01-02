@@ -8,9 +8,4 @@ orderRoutes.post('/',authMiddleware, createOrder);
 orderRoutes.get('/', authMiddleware, listOrders);
 orderRoutes.patch('/:id/advance', authMiddleware, advanceOrderState);
 
-// PATCH /orders/:id/advance
-// Endpoint PATCH /orders/:id/advance.
-// A transição deve respeitar a ordem estrita: CREATED -> ANALYSIS -> COMPLETED.
-// Bloquear tentativas de pular etapas ou retroceder.
-
 export default orderRoutes;

@@ -36,32 +36,34 @@ import { advanceOrderStateService } from "../../services/order/advanceOrderState
     }
   }
 
-export const listOrders = async (req: Request, res: Response)=>{
-  try{
-  const limit = req.query.limit
-  ? Number(req.query.limit)
-  : 10;
-    const state = req.query.state as
-      | 'CREATED'
-      | 'ANALYSIS'
-      | 'COMPLETED'
-      | undefined;
+export const listOrders = async (req: Request, res: Response) => {
+  try {
+    const limit = req.query.limit ? Number(req.query.limit) : 10;
+    const page = req.query.page ? Number(req.query.page) : 1;
 
-      const payload: ListOrdersDTO = {
+    const state = req.query.state as string | undefined;
+
+    if (limit <= 0 || page <= 0) {
+      return res.status(400).json({
+        message: 'limit and page must be greater than 0',
+      });
+    }
+
+    const payload: ListOrdersDTO = {
       limit,
+      page,
       ...(state && { state }),
     };
-
 
     const orders = await listOrdersService(payload);
 
     return res.status(200).json(orders);
-  }catch(e:any){
+  } catch (e: any) {
     return res.status(500).json({
       message: e.message || 'Internal server error',
     });
   }
-}
+};
 
 export const advanceOrderState = async (req: Request, res: Response)=>{
   try{
