@@ -41,6 +41,11 @@ JWT_SECRET= exemplo(asdadsadasdasdadsasda56w4d96a489d4as4d)
 ```md
 Existe um arquivo `.env.example` como referência.
 
+## ⚙️ Caso queira usar o mongoose+docker
+
+```bash
+docker-compose up --build -d
+
 ## ▶️ Executando o projeto
 
 Modo desenvolvimento:
