@@ -15,6 +15,7 @@ Antes de começar, você vai precisar ter instalado:
 
 - Node.js (versão 18+)
 - npm ou yarn
+- Docker(Opcional)
 
 ## 🔧 Instalação
 
