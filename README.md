@@ -23,6 +23,7 @@ Clone o repositório:
 ```bash
 git clone https://github.com/wolfhackd/desafio-tecnico-backend.git
 cd desafio-tecnico-backend
+```
 
 ## ⚙️ Variáveis de ambiente
 
@@ -30,6 +31,7 @@ Muito importante 👇
 
 ```md
 ## ⚙️ Variáveis de ambiente
+```
 
 Crie um arquivo `.env` na raiz do projeto:
 
@@ -37,22 +39,22 @@ Crie um arquivo `.env` na raiz do projeto:
 PORT=3000
 MONGO_URL= LINK
 JWT_SECRET= exemplo(asdadsadasdasdadsasda56w4d96a489d4as4d)
-
+```
 ```md
 Existe um arquivo `.env.example` como referência.
-
+```
 ## ⚙️ Caso queira usar o mongoose+docker
 
 ```bash
 docker-compose up --build -d
-
+```
 ## ▶️ Executando o projeto
 
 Modo desenvolvimento:
 
 ```bash
 npm run dev
-
+```
 ---
 
 ## 🔄 Endpoints principais
@@ -60,7 +62,7 @@ npm run dev
 ```md
 
 ## 🔄 Endpoints
-
+```
 ### Criar usuário
 POST /users/create-user
 
@@ -69,6 +71,7 @@ POST /users/create-user
   "email": "teste",
   "password": "123456"
 }
+```
 
 ### Logar usuário
 POST /users
@@ -78,6 +81,7 @@ POST /users
   "email": "teste",
   "password": "123456"
 }
+```
 
 ### Criar pedido
 POST /orders
@@ -94,22 +98,19 @@ POST /orders
     }
   ]
 }
-
+```
 ### Listar pedidos
 GET /orders?page=1&limit=5&state=CREATED
 
 Parâmetros
-page(Para controle de número de pagina)
-limit(Limite de itens por página)
-state(Filtro de avanço de processo)
+- Page (Para controle de número de pagina)
+- Limit (Limite de itens por página)
+- State (Filtro de avanço de processo)
 
 ### Avançar state do pedido
 
 PATCH /orders/:id/advance
 
-## 🧪 Testes
-
-```md
 ## 🧪 Testes
 
 Os testes unitários foram escritos utilizando **Vitest**.
@@ -118,3 +119,4 @@ Para executar os testes:
 
 ```bash
 npm run test
+```
